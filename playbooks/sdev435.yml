@@ -1,0 +1,14 @@
+---
+
+# This is a simple playbook to set up a system to develop programs for
+# Champlain College SDEV-435 on a CentOS-7 system
+#
+
+- name: Setup System
+  hosts: 192.168.0.186
+  user: root
+  gather_facts: True
+
+  roles:
+  - add_smooge
+  

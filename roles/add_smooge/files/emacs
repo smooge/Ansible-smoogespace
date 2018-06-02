@@ -1,0 +1,51 @@
+;; Put the time on the window
+(display-time)
+
+;; enable visual feedback on selections
+(setq-default transient-mark-mode t)
+
+;; stop at the end of the file, not just add lines
+(setq next-line-add-newlines nil)
+;; insert newline at the end of the file if needed
+(setq require-final-newline t)
+
+;; prevent strange things from happening with symlinks or hardlinks
+;; Version control
+
+(setq version-control t)
+(setq backup-by-copying t)
+(setq backup-by-copying-when-linked t)
+(global-set-key "\M-g" 'goto-line)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(display-time-mode t)
+ '(font-use-system-font t)
+ '(inhibit-startup-screen t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Droid Sans Mono" :foundry "unknown" :slant normal :weight normal :height 143 :width normal)))))
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(add-to-list 'default-frame-alist '(foreground-color . "white"))
+(add-to-list 'default-frame-alist '(background-color . "black"))
+(add-to-list 'default-frame-alist '(cursor-color . "coral"))
+
+(add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
+(add-hook 'adoc-mode-hook (lambda() (buffer-face-mode t)))
+
+; Linux mode for C
+(setq c-default-style
+      '((c-mode . "linux") (other . "gnu")))
+
+; Setup ansible
+(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))

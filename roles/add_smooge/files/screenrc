@@ -1,0 +1,16 @@
+startup_message       off             # default: on
+vbell                 off             # default: ???
+shelltitle '$ |bash'
+  
+# Status line.
+hardstatus on
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+
+# Default screens
+screen -t shell0        0
+screen -t shell1        1
+screen -t shell2        2
+screen -t shell3        3
+#
+#

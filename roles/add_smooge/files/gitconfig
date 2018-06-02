@@ -1,0 +1,5 @@
+[user]
+	name = Stephen Smoogen
+	email = smooge@gmail.com
+[push]
+	default = simple
