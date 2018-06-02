@@ -1,0 +1,29 @@
+---
+# Common Tasks for a CentOS-7 system
+
+# Make sure we have epel
+- name: Install epel-release
+  package:
+    name: epel-release
+    state: latest
+
+# Packages we should have
+- name: Install core packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - screen
+    - sudo
+    - vim-enhanced
+    - emacs-nox
+    - emacs-rpm-spec-mode
+    - emacs-git
+    - git
+    - fedpkg
+    - fedora-easy-karma
+    - fedora-cert
+    - fedora-reviewo
+    - fedora-packager
+    - centos-packager
+    - task

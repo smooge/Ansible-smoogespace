@@ -5,10 +5,12 @@
 #
 
 - name: Setup System
-  hosts: 192.168.0.186
+  hosts: sdev435
   user: root
   gather_facts: True
 
   roles:
-  - add_smooge
+#    - common
+    - add_smooge
   
+## End of file

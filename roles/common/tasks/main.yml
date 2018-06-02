@@ -1,0 +1,5 @@
+---
+# Common Tasks for any System
+
+- include: centos-7.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' and ansible_lsb.major_release|int == 7

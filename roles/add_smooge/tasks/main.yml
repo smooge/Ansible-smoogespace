@@ -1,41 +1,55 @@
 ---
 
+- name: Create the Group Smooge
+  group:
+    name: smooge
+    gid: 1000
+    state: present
+
 - name: Create the User Smooge
   user:
     name: smooge
     comment: Stephen Smoogen
     shell: /bin/bash
     uid: 1000
-    gid: 1000
     home: /home/smooge
     groups: wheel
     generate_ssh_key: no
-    passwd: $6$mzYXXCdnVCr2glZa$KWehpNyu7CBiwz5uJCysv/0Ka3aAiKoOP9Nxa2tdFHvgtWQ93N9JqR0ToMv7ZmtrxhUsMZ8seDTDKGblgq67X1
+    password: "{{ smooge.passwd }}"
+    state: present
 
 - name: Create SSH directory
   file:
     path: "/home/smooge/.ssh/"
     state: directory
+    owner: smooge
+    group: smooge
     mode: 0700
 
 - name: Create bin directory
   file:
     path: "/home/smooge/bin/"
     state: directory
+    owner: smooge
+    group: smooge
     mode: 0700
 
 
 - name: Copy over default config files
   copy:
-    src: {{ item.src }}
+    src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: smooge
+    group: smooge
   with_items:
-    - { src: 'ssh_authorized_keys', dest: '/home/smooge/.ssh/authorized_keys' }
-    - { src: 'ssh_config', dest: '/home/smooge/.ssh/config' }
-    - { src: 'bash_profile', dest: '/home/smooge/.bash_profile' }
-    - { src: 'bashrc', dest: '/home/smooge/.bashrc' }
-    - { src: 'emacs', dest: '/home/smooge/.emacs' }
-    - { src: 'screenrc', dest: '/home/smooge/.screenrc' }
-    - { src: 'gitconfig', dest: '/home/smooge/.gitconfig' }
+    - { src: 'ssh_authorized_keys', dest: '/home/smooge/.ssh/authorized_keys', mode: '0600' }
+    - { src: 'ssh_config', dest: '/home/smooge/.ssh/config', mode: '0600' }
+    - { src: 'bash_profile', dest: '/home/smooge/.bash_profile', mode: '0644' }
+    - { src: 'bashrc', dest: '/home/smooge/.bashrc', mode: '0644' }
+    - { src: 'emacs', dest: '/home/smooge/.emacs', mode: '0644' }
+    - { src: 'screenrc', dest: '/home/smooge/.screenrc', mode: '0644' }
+    - { src: 'gitconfig', dest: '/home/smooge/.gitconfig', mode: '0644' }
 
---
+##
+## End of file
