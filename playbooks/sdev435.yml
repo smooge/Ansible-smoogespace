@@ -10,7 +10,7 @@
   gather_facts: True
 
   roles:
-#    - common
+    - common
     - add_smooge
   
 ## End of file
