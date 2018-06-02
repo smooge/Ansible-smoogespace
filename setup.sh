@@ -53,7 +53,7 @@ fi
 
 for DIR in ${DIRECTORIES}; do
     mkdir -vp ${HOMEDIR}/${DIR}
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
 	echo "Unable to create directory ${DIR}"
 	exit 1;
     fi;
@@ -61,7 +61,7 @@ done
 
 for FILE in ${FILES}; do
     touch ${HOMEDIR}/${FILE}
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
 	echo "Unable to create file ${FILE}"
 	exit 1;
     fi;
