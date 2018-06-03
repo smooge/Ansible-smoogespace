@@ -16,14 +16,22 @@
     - screen
     - sudo
     - vim-enhanced
+    - git
     - emacs-nox
+    - task
+
+- name: Install devel packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
     - emacs-rpm-spec-mode
     - emacs-git
-    - git
     - fedpkg
     - fedora-easy-karma
     - fedora-cert
-    - fedora-reviewo
+    - fedora-review
     - fedora-packager
     - centos-packager
-    - task
+  when: devel_env
+
