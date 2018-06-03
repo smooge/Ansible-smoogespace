@@ -18,3 +18,6 @@
 
 # Python compiled code
 *.pyc
+
+# Ansible retry files
+*.retry

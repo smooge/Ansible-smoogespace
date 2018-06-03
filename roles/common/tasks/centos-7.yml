@@ -19,6 +19,7 @@
     - git
     - emacs-nox
     - task
+    - yum-utils
 
 - name: Install devel packages
   package:
