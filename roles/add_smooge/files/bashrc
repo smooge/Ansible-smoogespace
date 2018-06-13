@@ -79,6 +79,18 @@ function genpasswd () {
     fi
 }
 
+alias sshadd='ssh-add ~/.ssh/id_github ~/.ssh/id_windows'
+alias sshinit='ssh-agent -s > sshagent; source sshagent; sshadd'
+if [ -f ${HOME}/sshagent ]; then
+  source ${HOME}/sshagent >> /dev/null
+  working=`ps $SSH_AGENT_PID`
+  if [ "$?" != 0 ]; then
+    if [ ${TERM} != "dumb" ]; then
+      echo "No ssh-agent running"
+      echo "ssh-agent -s > sshagent; source sshagent; sshadd"
+    fi
+  fi
+fi
 
 
 
