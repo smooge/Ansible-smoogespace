@@ -4,5 +4,10 @@
     name: '{{ item }}'
     state: installed
   with_items:
-    - python-pandas
     - gnuplot
+    - python-flask
+    - python-pandas
+    - python-pygeoip.noarch
+    - python2-fedora-flask.noarch
+    - python-virtualenv.noarch
+    - python-ipython-console.noarch
