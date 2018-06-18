@@ -1,13 +1,71 @@
 ---
-- name: Install system specific packages
+- name: Install python specific packages
   package:
     name: '{{ item }}'
     state: installed
   with_items:
     - gnuplot
     - python-flask
-    - python-pandas
-    - python-pygeoip.noarch
-    - python2-fedora-flask.noarch
-    - python-virtualenv.noarch
     - python-ipython-console.noarch
+    - python-pandas
+    - python-psycopg2
+    - python-pygeoip.noarch
+    - python-sqlalchemy
+    - python-virtualenv.noarch
+    - python2-flask-sqlalchemy
+    - python2-fedora-flask.noarch
+    
+- name: Install webserver packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - apr
+    - apr-util
+    - crypto-utils
+    - centos-indexhtml
+    - httpd
+    - mod_ssl
+    - mod_wsgi
+
+- name: Install devel packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - autoconf
+    - automake
+    - bison
+    - byacc
+    - cpp
+    - cscope
+    - ctags
+    - diffstat
+    - doxygen
+    - flex
+    - git
+    - gcc
+    - gcc-c++
+    - emacs-rpm-spec-mode
+    - emacs-git
+    - fedpkg
+    - fedora-easy-karma
+    - fedora-cert
+    - fedora-review
+    - fedora-packager
+    - centos-packager
+    - patchutils
+    - indent
+    - rpm-sign
+    - satyr
+    - strace
+    - scl-utils
+
+- name: Install postgres items
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - postgresql
+    - postgresql-plpython
+    - postgresql-server

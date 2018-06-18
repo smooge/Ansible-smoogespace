@@ -13,29 +13,34 @@
     name: '{{ item }}'
     state: installed
   with_items:
+    - bc
+    - bind-utils
+    - chrony
     - elinks
     - emacs-nox
-    - git
+    - hunspell-en
+    - hunspell-en-GB
+    - hunspell-en-US
     - lftp
+    - lshw
+    - lsof
+    - mailx
+    - man-pages
+    - man-pages-overrides
+    - mlocate
+    - mtr
+    - net-tools
+    - pinfo
+    - psacct
     - screen
     - sudo
+    - sysstat
     - task
+    - tcpdump
+    - time
+    - traceroute
     - vim-enhanced
     - wget
+    - words
     - yum-utils
-
-- name: Install devel packages
-  package:
-    name: '{{ item }}'
-    state: installed
-  with_items:
-    - emacs-rpm-spec-mode
-    - emacs-git
-    - fedpkg
-    - fedora-easy-karma
-    - fedora-cert
-    - fedora-review
-    - fedora-packager
-    - centos-packager
-  when: devel_env
-
+    
