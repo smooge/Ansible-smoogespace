@@ -1,0 +1,33 @@
+- name: Install devel packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - autoconf
+    - automake
+    - bison
+    - byacc
+    - cpp
+    - cscope
+    - ctags
+    - diffstat
+    - doxygen
+    - flex
+    - git
+    - gcc
+    - gcc-c++
+    - emacs-rpm-spec-mode
+    - emacs-git
+    - fedpkg
+    - fedora-easy-karma
+    - fedora-cert
+    - fedora-review
+    - fedora-packager
+    - centos-packager
+    - patchutils
+    - indent
+    - rpm-sign
+    - satyr
+    - strace
+    - scl-utils
+

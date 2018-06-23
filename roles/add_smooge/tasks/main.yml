@@ -43,13 +43,24 @@
     owner: smooge
     group: smooge
   with_items:
-    - { src: 'ssh_authorized_keys', dest: '/home/smooge/.ssh/authorized_keys', mode: '0600' }
-    - { src: 'ssh_config', dest: '/home/smooge/.ssh/config', mode: '0600' }
-    - { src: 'bash_profile', dest: '/home/smooge/.bash_profile', mode: '0644' }
-    - { src: 'bashrc', dest: '/home/smooge/.bashrc', mode: '0644' }
-    - { src: 'emacs', dest: '/home/smooge/.emacs', mode: '0644' }
-    - { src: 'screenrc', dest: '/home/smooge/.screenrc', mode: '0644' }
-    - { src: 'gitconfig', dest: '/home/smooge/.gitconfig', mode: '0644' }
+    - { src: 'configs/ssh_authorized_keys', dest: '/home/smooge/.ssh/authorized_keys', mode: '0600' }
+    - { src: 'configs/ssh_config', dest: '/home/smooge/.ssh/config', mode: '0600' }
+    - { src: 'configs/bash_profile', dest: '/home/smooge/.bash_profile', mode: '0644' }
+    - { src: 'configs/bashrc', dest: '/home/smooge/.bashrc', mode: '0644' }
+    - { src: 'configs/emacs', dest: '/home/smooge/.emacs', mode: '0644' }
+    - { src: 'configs/screenrc', dest: '/home/smooge/.screenrc', mode: '0644' }
+    - { src: 'configs/gitconfig', dest: '/home/smooge/.gitconfig', mode: '0644' }
+
+- name: Copy over default scripts files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: smooge
+    group: smooge
+  with_items:
+    - { src: 'scripts/clean', dest: '/home/smooge/bin/clean', mode: '0755' }
+
 
 ##
 ## End of file

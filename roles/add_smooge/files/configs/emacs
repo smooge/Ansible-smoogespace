@@ -49,3 +49,9 @@
 
 ; Setup ansible
 (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key (kbd "C-x O") 'back-window)
+
