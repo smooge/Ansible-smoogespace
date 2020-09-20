@@ -1,4 +1,5 @@
 Host *
+    User smooge
     ForwardX11 yes
     ForwardX11Trusted yes
     SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES 
@@ -13,5 +14,3 @@ Host *
 Host el-6 el-7
     User root
 
-Host *
-    User smooge

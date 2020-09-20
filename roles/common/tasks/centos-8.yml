@@ -1,0 +1,44 @@
+---
+# Common Tasks for a CentOS-8 System
+
+# Make sure we have EPEL
+- name: Install epel-release
+  package:
+    name: epel-release
+    state: installed
+
+# Packages we should have
+- name: Install core packages
+  package:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - bc
+    - bind-utils
+    - chrony
+    - emacs-nox
+    - hunspell-en
+    - hunspell-en-GB
+    - hunspell-en-US
+    - lftp
+    - lshw
+    - lsof
+    - mailx
+    - man-pages
+    - man-pages-overrides
+    - mlocate
+    - mtr
+    - net-tools
+    - pinfo
+    - psacct
+    - screen
+    - sudo
+    - sysstat
+    - task
+    - tcpdump
+    - time
+    - traceroute
+    - vim-enhanced
+    - wget
+    - words
+    - dnf-utils
