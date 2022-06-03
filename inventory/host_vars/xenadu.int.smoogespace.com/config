@@ -1,0 +1,37 @@
+---
+hostname: "xenadu"
+domain:   "int.smoogespace.com"
+has_ipv4: yes
+br0_ipv4: 192.168.1.150
+br0_ipv4_nm: 24
+br0_ipv4_gw: 192.168.1.1
+
+has_ipv6: yes
+
+ipv4_dns1: "8.8.8.8"
+ipv4_dns2: "8.8.4.4"
+ivp6_dns1: "2001:4860:4860::8888"
+
+mac0: f8:b1:56:be:ed:32
+
+network_connections:
+  - name: bridge0
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address:
+      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+      dns:
+      - "{{ ipv4_dns1 }}"
+      - "{{ ipv4_dns2 }}"
+      - "{{ ipv6_dns1 }}"
+      dns_search:
+      - smoogespace.com
+      auto6: yes
+  - name: bridge0-port0
+    state: up
+    type: ethernet
+    master: bridge0
+    mac: "{{ mac0 }}"

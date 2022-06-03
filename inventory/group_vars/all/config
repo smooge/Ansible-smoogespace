@@ -1,0 +1,24 @@
+# Default variables for all systems to be configured by playbooks
+
+root_ssh_keys:
+        - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
+
+base_rpm_pkgs: sudo,dnf,gawk,make,wget,tar,bzip2,gzip,python3,unzip,tmux,yum-utils
+base_el9_pkgs:
+base_el8_pkgs:
+base_fc_pkgs:
+
+use_local_mirror: true
+mirror: 192.168.1.150
+m_epel:   "mirrors/epel"
+m_epel_k: "mirrors/epel/RPM-GPG-KEY-EPEL-8"
+m_alma9:  "mirrors/alma/9"
+m_c9s:    "mirrors/centos/9-stream"
+
+admins_list:
+   - login_name: ssmoogen
+     full_name: Stephen Smoogen
+     sudo_right: true
+     ssh_pub_key:
+        - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
+

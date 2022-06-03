@@ -1,5 +1,6 @@
 [int_smoogespace]
-xanadu.int.smoogespace.com 
+xenadu.int.smoogespace.com ansible_host=192.168.1.150
+xenadu ansible_host=192.168.1.150
 
 [smoogespace_new]
 linode00.smoogespace.com

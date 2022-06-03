@@ -21,3 +21,6 @@
 
 # Ansible retry files
 *.retry
+
+# Ansible cache
+.ansible_cache/
