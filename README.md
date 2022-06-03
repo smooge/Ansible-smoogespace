@@ -1,7 +1,9 @@
 # SmoogeSpace Ansible playbooks
 
 A general set of playbooks used to configure and update systems in the
-smoogespace domain. 
+smoogespace domain. We will be using a similar system as Debops
+https://github.com/debops/debops but not as full-featured. If it grows
+in usability, a seperate project covering a 'ELOps' would be created.
 
 ## Layout
 
@@ -29,6 +31,14 @@ Files which would need editing for others to use:
 
 Currently the gitignore tries not to track directories named
 private. ansible-vault is to be used to keep private variables secret.
+
+### roles/ logic
+
+Roles will normally be written with an eye towards a common action on a
+specific rpm or set of rpms. This should allow for concentration on an
+action inside a role versus trying to make a 'generic' role which does
+all things that a specific rpm could do. This will limit reuse, but many
+times the software is changing enough that 'reuse' is limited already.
 
 ## Targeted Architectures
 
