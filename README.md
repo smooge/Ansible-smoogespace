@@ -47,7 +47,7 @@ times the software is changing enough that 'reuse' is limited already.
 
 * xenadu
   * httpd server
-  * virtual server
+  * mirror server
   * mock builder
 * linode00
   * httpd server
