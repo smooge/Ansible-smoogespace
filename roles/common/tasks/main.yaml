@@ -18,6 +18,7 @@
   yum:
     name: "{{ base_rpm_pkgs }}"
     state: latest
+  when: not base_rpm_pkgs # skip if empty
   tags:
     - base
 
@@ -25,7 +26,7 @@
   yum:
     name: "{{ base_epel8_pkgs }}"
     state: latest
-  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "8"
+  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "8" and not base_epel8_pkgs
   tags:
     - base
 
@@ -33,7 +34,7 @@
   yum:
     name: "{{ base_epel9_pkgs }}"
     state: latest
-  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "9"
+  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "9" and not base_epel9_pkgs
   tags:
     - base
 
@@ -41,6 +42,6 @@
   yum:
     name: "{{ base_fc_pkgs }}"
     state: latest
-  when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= "28"
+  when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= "28" and not base_fc_pkgs
   tags:
     - base
