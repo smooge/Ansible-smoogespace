@@ -1,0 +1,46 @@
+## This role should cover the basic setup for all systems
+- name: == Configure the root ssh key
+  authorized_key: 
+    user: root
+    key: "{{ item }}"
+  with_items:
+    - "{{ root_ssh_keys }}"
+
+- name: Install EPEL-release RPM when Alma
+  yum:
+    name: epel-release
+    state: present
+  when: ansible_distribution == 'AlmaLinux'
+  tags:
+    - base
+
+- name: Install the common OS base RPM packages
+  yum:
+    name: "{{ base_rpm_pkgs }}"
+    state: latest
+  tags:
+    - base
+
+- name: Install the EPEL 8 base RPM packages
+  yum:
+    name: "{{ base_epel8_pkgs }}"
+    state: latest
+  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "8"
+  tags:
+    - base
+
+- name: Install the EPEL 9 base RPM packages
+  yum:
+    name: "{{ base_epel9_pkgs }}"
+    state: latest
+  when: ansible_distribution == 'AlmaLinux' and ansible_distribution_major_version == "9"
+  tags:
+    - base
+
+- name: Install the Fedora base RPM packages
+  yum:
+    name: "{{ base_fc_pkgs }}"
+    state: latest
+  when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= "28"
+  tags:
+    - base

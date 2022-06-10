@@ -1,0 +1,8 @@
+---
+- name: Setup initial systems
+  hosts: int_smoogespace
+  become: false
+  gather_facts: true
+  roles:
+    - common
+    - rhel-system-roles.network
