@@ -1,0 +1,7 @@
+---
+- name: Setup initial systems network
+  hosts: all
+  become: false
+  gather_facts: true
+  roles:
+    - rhel-system-roles.network

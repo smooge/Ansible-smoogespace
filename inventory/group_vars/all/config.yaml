@@ -3,17 +3,10 @@
 root_ssh_keys:
         - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
 
-base_rpm_pkgs: sudo,dnf,gawk,make,wget,tar,bzip2,gzip,python3,unzip,tmux,yum-utils
+base_rpm_pkgs: sudo,dnf,gawk,make,wget,tar,bzip2,gzip,python3,unzip,tmux,yum-utils,postfix,bind-utils
 base_epel8_pkgs:
 base_epel9_pkgs: 
 base_fc_pkgs:
-
-use_local_mirror: true
-mirror: 192.168.1.150
-m_epel:   "mirrors/epel"
-m_epel_k: "mirrors/epel/RPM-GPG-KEY-EPEL-8"
-m_alma9:  "mirrors/alma/9"
-m_c9s:    "mirrors/centos/9-stream"
 
 admins_list:
    - login_name: ssmoogen
@@ -22,3 +15,10 @@ admins_list:
      ssh_pub_key:
         - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
 
+## defaults which are overridden by other configs
+is_external_smtpd: false
+has_procmail: false
+has_httpd: false
+
+change_sshd: false
+alt_sshd: 9022

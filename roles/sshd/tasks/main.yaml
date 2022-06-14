@@ -1,0 +1,20 @@
+## First we need to set up an alternate SSH port if needed
+- name: Setup selinux for alternate SSH port
+  seport:
+    ports: "{{ alt_sshd }}"
+    proto: "tcp"
+    setype: "ssh_port_t"
+    state: "present"
+  when: change_sshd
+
+## Setup a banner for login
+- name: Copy /etc/issue.banner to system
+  copy: src=issue.banner dest=/etc/issue.banner mode=0644
+
+## Neet to set up the firewall before we change the configs
+- include_role:
+    name: linux-system-roles.firewall
+
+## Change the sshd configs as needed.    
+- include_role:
+    name: linux-system-roles.sshd

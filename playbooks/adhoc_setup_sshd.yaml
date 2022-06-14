@@ -1,0 +1,7 @@
+---
+- name: Setup SSHD on host
+  hosts: all
+  become: false
+  gather_facts: true
+  roles:
+    - sshd

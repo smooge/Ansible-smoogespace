@@ -1,0 +1,21 @@
+---
+hostname: "linode01"
+domain: "smoogespace.com"
+
+network_connections:
+  - name: eth0
+    state: up
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address:
+      - "173.255.204.87/24"
+      gateway4: "173.255.204.1"
+      dns:
+      - "8.8.8.8"
+      - "8.8.4.4"
+      dns_search:
+      - smoogespace.com
+      auto6: no
+    mac: "f2:3c:91:93:ee:2d"
+

@@ -3,7 +3,7 @@ xenadu.int.smoogespace.com ansible_host=192.168.1.150
 alma8-ws.int.smoogespace.com ansible_host=192.168.1.140 
 
 [smoogespace_new]
-linode00.smoogespace.com
+linode00.smoogespace.com ansible_port=9022
 
 [smoogespace_old]
 linode01.smoogespace.com

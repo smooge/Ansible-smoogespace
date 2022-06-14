@@ -1,0 +1,7 @@
+---
+- name: Set time system
+  hosts: all
+  become: false
+  gather_facts: true
+  roles:
+    - rhel-system-roles.timesync
