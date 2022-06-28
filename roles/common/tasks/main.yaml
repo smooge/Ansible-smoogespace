@@ -7,7 +7,7 @@
     - "{{ root_ssh_keys }}"
 
 - name: Install EPEL-release RPM when EL based
-  yum:
+  package:
     name: epel-release
     state: present
   when: ansible_distribution == 'AlmaLinux' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
@@ -15,7 +15,7 @@
     - base
 
 - name: Install the common OS base RPM packages
-  yum:
+  package:
     name: "{{ base_rpm_pkgs }}"
     state: latest
   when: base_rpm_pkgs
@@ -23,7 +23,7 @@
     - base
 
 - name: Install the EPEL 8 base RPM packages
-  yum:
+  package:
     name: "{{ base_epel8_pkgs }}"
     state: latest
   when: ( ansible_distribution == 'AlmaLinux' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version == "8" and base_epel8_pkgs
@@ -31,7 +31,7 @@
     - base
 
 - name: Install the EPEL 9 base RPM packages
-  yum:
+  package:
     name: "{{ base_epel9_pkgs }}"
     state: latest
   when: ( ansible_distribution == 'AlmaLinux' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version == "9" and base_epel9_pkgs
@@ -39,7 +39,7 @@
     - base
 
 - name: Install the Fedora base RPM packages
-  yum:
+  package:
     name: "{{ base_fc_pkgs }}"
     state: latest
   when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= "28" and base_fc_pkgs

@@ -7,4 +7,8 @@ linode00.smoogespace.com ansible_port=9022
 
 [smoogespace_old]
 linode01.smoogespace.com
+
+[mailserver_external]
+linode00.smoogespace.com ansible_port=9022
+
 ## end of file

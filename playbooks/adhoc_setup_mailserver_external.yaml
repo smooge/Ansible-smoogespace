@@ -1,0 +1,9 @@
+---
+- name: Setup external mailsystem
+  hosts: mailserver_external
+  become: false
+  gather_facts: true
+  roles:
+    - common
+    - postfix
+    - spamassassin

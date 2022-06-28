@@ -1,0 +1,69 @@
+## Spamassassin has a lot of weak dependencies like gcc. We only want
+## the main ones so we need to turn off 
+- name: Install the spammassassin packages
+  dnf:
+    name:
+      - spamassassin
+    install_weak_deps: false
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+
+- name: Add the spammy group account
+  group:
+    name: "{{ spam_user }}"
+    state: present
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+
+- name: Add the spamd user account
+  user:
+    name: "{{ spam_user }}"
+    shell: /bin/bash
+    home: "{{ spam_homedir }}"
+    group: "{{ spam_user }}"
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+
+- name: Make the spammy accounts homedir
+  file:
+    path: "{{ spam_homedir }}"
+    owner: "{{ spam_user }}"
+    group: "{{ spam_user }}"
+    mode: 0755
+    state: directory
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+
+- name: Make the spammy accounts Bayes dir
+  file:
+    path: "{{ spam_bayesdir }}"
+    owner: "{{ spam_user }}"
+    group: "{{ spam_user }}"
+    mode: 0755
+    state: directory
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+      
+- name: Alter postfix master.cf to alter smtp/inet
+  copy: src=master.cf dest=/etc/postfix/master.cf mode=0644
+  when: is_external_smtpd
+  tags:
+      - postfix
+      - spamassassin
+  notify: restart postfix
+      
+- name: ensure spamassassin is enabled and started
+  service:
+    name: spamassassin
+    enabled: True
+    state: started

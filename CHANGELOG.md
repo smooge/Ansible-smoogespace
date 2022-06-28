@@ -23,8 +23,22 @@ and then copy the template at the bottom of the file as the new
 * Nothing
 
 ### Added:
-* Base configs for system xenadu
 * CHANGELOG.md file to cover this changelog
+* Base configs for systems
+  - xenadu
+  - linode00
+  - linode01
+  - alma8-ws
+* Base roles for 
+  - postfix
+  - sshd
+  - firewall
+  - spamassassin
+* Test playbooks for
+  - postfix
+  - sshd
+  - firewall
+  - mailserver_external
 
 ### Deprecated:
 * Nothing.

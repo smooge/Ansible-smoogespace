@@ -1,0 +1,42 @@
+## Setup the Postfix config for the system using
+## linux-system-roles.postfix
+# Backup multiple times with timestamp
+postfix_backup_multiple: true
+postfix_conf:
+  inet_interfaces: all
+  mailbox_size_limit: 0
+  myorigin:   smoogespace.com
+  mydomain:   smoogespace.com                                                                                                                                                         
+  mydestination: '$myhostname, $mydomain, localhost.$mydomain, localhost, home.$mydomain, smtp.$mydomain, www.$mydomain'
+  recipient_delimiter: '+'
+  default_process_limit: 100
+  smtpd_client_connection_count_limit: 10
+  smtpd_client_connection_rate_limit: 30
+  queue_minfree: 20971520
+  header_size_limit: 51200
+  message_size_limit: 10485760
+  smtpd_recipient_limit: 100
+  smtpd_banner: "$mydomain ESMTP"
+  mailbox_command: '/usr/bin/procmail'
+  strict_rfc821_envelopes: 'yes'
+  smtpd_helo_required: 'yes'
+  smtpd_recipient_restrictions:
+    - permit_mynetworks
+    - permit_sasl_authenticated
+    - reject_unauth_destination
+    - reject_invalid_hostname
+    - reject_unauth_pipelining
+    - reject_non_fqdn_sender
+    - reject_unknown_sender_domain 
+    - reject_non_fqdn_recipient
+    - reject_unknown_recipient_domain
+    - permit
+  disable_vrfy_command: 'yes'
+  unknown_address_reject_code: 554
+  unknown_client_reject_code: 554
+  unknown_hostname_reject_code: 554
+  unknown_local_recipient_reject_code: 554
+
+spam_user: "spammy"
+spam_homedir: "/home/spammy"
+spam_bayesdir: "/home/spammy/.spamassassin"

@@ -28,50 +28,8 @@ network_connections:
 ## Setup the Postfix config for the system using
 ## linux-system-roles.postfix
 # Backup multiple times with timestamp
-postfix_backup_multiple: true
 postfix_conf:
-  inet_interfaces: all
-  mailbox_size_limit: 0
   myhostname: linode00.smoogespace.com
-  myorigin:   smoogespace.com
-  mydomain:   smoogespace.com                                                                                                                                                         
-  mydestination: '$myhostname, $mydomain, localhost.$mydomain, localhost, home.$mydomain, smtp.$mydomain, www.$mydomain'
-  recipient_delimiter: '+'
-  default_process_limit: 100
-  smtpd_client_connection_count_limit: 10
-  smtpd_client_connection_rate_limit: 30
-  queue_minfree: 20971520
-  header_size_limit: 51200
-  message_size_limit: 10485760
-  smtpd_recipient_limit: 100
-  smtpd_banner: "$mydomain ESMTP"
-  mailbox_command: '/usr/bin/procmail'
-  strict_rfc821_envelopes: 'yes'
-  smtpd_helo_required: 'yes'
-  smtpd_helo_restrictions:
-    - permit_mynetworks
-    - permit_sasl_authenticated
-    - reject_invalid_helo_hostname
-    - reject_non_fqdn_helo_hostname
-    - reject_unknown_helo_hostname
-  smtpd_sender_restrictions:
-    - permit_mynetworks
-    - permit_sasl_authenticated
-    - reject_unknown_sender_domain
-    - reject_unknown_client_hostname
-    - reject_unknown_reverse_client_hostname
-#  policy-spf_time_limit: 3600
-  smtpd_recipient_restrictions:
-    - permit_mynetworks
-    - permit_sasl_authenticated
-    - reject_unauth_destination
-    #- check_policy_service unix:private/policyd-spf 
-    #- check_policy_service unix:postgrey/socket
-  disable_vrfy_command: 'yes'
-  unknown_address_reject_code: 554
-  unknown_hostname_reject_code: 554
-  unknown_client_reject_code: 554
-
 
 ## Set up sshd using linux-system-roles.sshd
 change_sshd: true
@@ -99,6 +57,12 @@ firewall:
     zone: 'public'
     state: enabled
   - port: '9022/tcp'
+    zone: 'public'
+    state: enabled
+  - service: smtp
+    zone: 'public'
+    state: enabled
+  - service: smtps
     zone: 'public'
     state: enabled
 

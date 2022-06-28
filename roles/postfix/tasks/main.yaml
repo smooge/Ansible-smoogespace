@@ -1,23 +1,11 @@
 ## Add in packages needed for mail server
-- name: Install the postfix related packages for external use
-  yum:
+- name: Install the postfix related packages
+  package:
     name:
-      # - postgrey
       - postfix
-      - postfix-perl-scripts
   when: is_external_smtpd
   tags:
       - postfix
-
-## Enable the postgrey service (not available for EPEL9 yet)
-# - name: Turn on postgrey
-#   ansible.builtin.systemd:
-#     state: started
-#     enabled: true
-#     name: postgrey
-#   when: is_external_smtpd
-#   tags:
-#       - postfix
 
 ## Use the linux-system-roles.postfix to set the rest of the items.
 - include_role:
