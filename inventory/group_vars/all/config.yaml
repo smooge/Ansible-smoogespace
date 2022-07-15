@@ -8,13 +8,22 @@ base_epel8_pkgs:
 base_epel9_pkgs: 
 base_fc_pkgs:
 
-admins_list:
+global_admins_list:
    - login_name: ssmoogen
-     full_name: Stephen Smoogen
+     full_name: Stephen J. Smoogen
      sudo_right: true
+     shell: /bin/bash
      ssh_pub_key:
         - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
 
+local_users_list:
+   - login_name: smooge
+     full_name: Stephen Smoogen
+     sudo_right: false
+     shell: /bin/bash
+     ssh_pub_key:
+        - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
+      
 ## defaults which are overridden by other configs
 is_external_smtpd: false
 has_procmail: false
