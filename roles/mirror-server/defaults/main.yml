@@ -1,0 +1,14 @@
+##
+## These servers are fairly unloaded for US users. EU users should find
+## a mirror in the EU.
+centos_upstream_mirror: download-cc-rdu01.fedoraproject.org
+epel_upstream_mirror: download-cc-rdu01.fedoraproject.org
+fed_upstream_mirror: download-cc-rdu01.fedoraproject.org
+alma_upstream_mirror: iad.mirror.rackspace.com
+
+## FIXME: We are assuming that the RHEL mirror is cdn.redhat.com. 
+
+## Home directory we want to put the packages in and httpd will serve from.
+server_homedir: /srv/mirrors
+
+mirror_pkgs: dnf-utils, python3-policycoreutils, httpd, createrepo_c

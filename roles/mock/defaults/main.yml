@@ -1,0 +1,13 @@
+---
+pkgs: bash-completion,mock,mock-scm,fedpkg,centpkg
+user_agent: "TYT-1.0"
+redhat_subscription_key_id: "NEEDS_TO_BE_HOST_VARIABLE"
+
+local_users_list:
+   - login_name: mockbuilder
+     full_name: Account to Build Mock
+     group: mock
+     sudo_right: true
+     ssh_pub_key:
+        - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP0LzhUTVbwHhX/CVqpVfmhMFJknoUZ/D/L1u4Pot+d0bxVK5bF2NNJzal48wf1N2jv5TpuHLLCzi5eNyOPpz7Y= smooge@smoogen-laptop.localdomain
+

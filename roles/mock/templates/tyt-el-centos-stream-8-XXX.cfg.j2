@@ -1,0 +1,6 @@
+include('templates/tyt-el-centos-stream-8.tpl')
+include('templates/tyt-el-epel-8.tpl')
+
+config_opts['root'] = 'tyt-cent8s-{{ ansible_architecture }}'
+config_opts['target_arch'] = '{{ ansible_architecture }}'
+config_opts['legal_host_arches'] = ('{{ ansible_architecture }}',)

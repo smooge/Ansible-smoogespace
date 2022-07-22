@@ -2,6 +2,12 @@
 xenadu.int.smoogespace.com ansible_host=192.168.1.150
 alma8-ws.int.smoogespace.com ansible_host=192.168.1.140 
 
+[mock_server]
+xenadu.int.smoogespace.com ansible_host=192.168.1.150
+
+[mirror_server]
+xenadu.int.smoogespace.com ansible_host=192.168.1.150
+
 [smoogespace_new]
 linode00.smoogespace.com ansible_port=9022
 

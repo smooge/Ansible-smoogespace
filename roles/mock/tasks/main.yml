@@ -1,0 +1,23 @@
+# A rolebook to cover installation of a mock builder.
+# For the RHEL certificates to work it assumes that you have a system
+# configured to use RHEL or a local mirror setup.
+# 
+
+# FIXME: this will fail if epel-packages is not installed
+- name: == Install Initial packages
+  yum:
+    name: "{{ pkgs }}"
+    state: latest
+
+- name: == Set up Mock configs for correct ansible_architecture
+  template: src=tyt-el-{{ item }}-XXX.cfg.j2 dest=/etc/mock/tyt-el-{{ item }}-{{ ansible_architecture }}.cfg mode=0644
+  with_items:
+    - centos-stream-8
+    - rhel-8
+
+- name: == Set up Mock templates for mirror/no-mirror
+  template: src=tyt-el-{{ item }}.tpl.j2 dest=/etc/mock/templates/tyt-el-{{ item }}.tpl mode=0644
+  with_items:
+    - centos-stream-8
+    - epel-8
+    - rhel-8

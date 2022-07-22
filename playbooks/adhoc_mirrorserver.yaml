@@ -1,0 +1,7 @@
+- name: Setup mirror-system
+  hosts: mirror_server
+  become: false
+  gather_facts: true
+  roles:
+    - common
+    - mirror-server

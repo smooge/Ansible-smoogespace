@@ -1,0 +1,34 @@
+#!/bin/bash
+
+##
+## This script is used to sync source data from main download servers to
+## a local directory on the system.
+##
+
+RSYNC='/usr/bin/rsync'
+RS_OPT="-avSHP  --numeric-ids --log-file=/var/log/rsync-update.log"
+RS_DEADLY="--delete --delete-excluded "
+RS_SERVER="{{ fed_upstream_mirror }}"
+EPL_EXCLUDES=""
+FED_EXCLUDES=""
+CEN_EXCLUDES="--exclude=ppc64le --exclude=s390x --exclude=ppc64"
+
+HOMEDIR="{{server_homedir}}/fedora"
+
+mkdir -vp --mode=0755 ${HOMEDIR}
+chown -c root.root ${HOMEDIR}
+
+RELEASEDIR=('releases/36/Everything/source/tree/' 'releases/36/Modular/source/tree/' );
+
+UPDATEDIR=('updates/36/Everything/source/tree/' 'updates/36/Modular/source/tree/');
+
+for dir in ${RELEASEDIR[@]} ${UPDATEDIR[@]}; do
+    mkdir -vp --mode=0755 ${HOMEDIR}/${dir}
+    ${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CEN_EXCLUDES} ${RS_SERVER}::fedora-buffet/fedora/linux/${dir} ${HOMEDIR}/${dir}/ | tail -n2 | logger -p local0.notice -t rsync_fedora
+    if [[ $? -ne 0 ]]; then
+	echo "Unable to finish sync to Fedora ${dir}"
+    fi
+done
+
+
+
