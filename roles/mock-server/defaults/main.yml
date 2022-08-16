@@ -1,5 +1,5 @@
 ---
-pkgs: bash-completion,mock,mock-scm,fedpkg,centpkg
+pkgs: bash-completion,mock,mock-scm,centpkg
 user_agent: "TYT-1.0"
 redhat_subscription_key_id: "NEEDS_TO_BE_HOST_VARIABLE"
 
