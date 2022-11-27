@@ -1,0 +1,78 @@
+// {{ ansible_managed }}
+//
+
+Version = {{ znc_version }}
+MaxBufferSize = {{ znc_max_buffer }}
+SSLCertFile = {{ znc_ssl_pem }}
+AnonIPLimit = 10
+ConnectDelay = 5
+ProtectWebSessions = true
+ServerThrottle = 30
+
+{% for system_module in znc_system_modules %}
+LoadModule = {{ system_module }}
+{% endfor %}
+
+<Listener l>
+  AllowIRC = true
+  AllowWeb = true
+  Port = {{ znc_port }}
+  IPv4 = {{ (znc_ipv4 | bool) | lower }}
+  IPv6 = {{ (znc_ipv6 | bool) | lower }}
+  SSL = {{ (znc_ssl | bool) | lower }}
+</Listener>
+
+{% for user in znc_users %}
+<User {{ user.name }}>
+  Allow            = {{ user.allow | default("*") }}
+  Admin            = {{ user.admin | default(false) | bool }}
+  AltNick          = {{ user.altnick | default(user.nick+"_") }}
+  AutoClearChanBuffer = {{ user.autoclearchanbuffer | default(true) | bool }}
+  AutoClearQueryBuffer = {{ user.autoclearquerybuffer | default(true) | bool }}
+  Buffer           = {{ user.buffer | default(znc_max_buffer_size) }}
+  ChanModes        = {{ user.chanmodes | default("+stn") }}
+  Ident            = {{ user.ident | default(user.nick) }}
+  MultiClients     = {{ user.multiclients | default(false) | bool }}
+  Nick             = {{ user.nick }}
+  RealName         = {{ user.realname | default(user.nick) }}
+  QuitMsg          = {{ user.quitmsg | default("crashed.") }}
+  AppendTimestamp  = {{ user.atimestamp | default(false) | bool }}
+  PrependTimestamp = {{ user.atimestamp | default(false) | bool }}
+  TimestampFormat  =  {{ user.timestamp }}
+  Timezone         = {{ user.timezone }}
+  
+{% if user.modules is defined %}
+{% for module in user.modules %}
+  LoadModule       = {{ module }}
+{% endfor %}
+{% endif %}
+
+{% if user.networks is defined %}
+{% for network_name, network in user.networks.items() %}
+
+  <Network {{ network_name }}>
+     Server     = {{ network.server }} {{ "+" if network.ssl else "" }}{{ network.port }} {{ network.password | default("") }}
+{% if network.modules is defined %}
+{% for module in network.modules %}
+     LoadModule = {{ module }}
+{% endfor %}
+{% endif %}
+{% if network.channels is defined %}
+{% for channel in network.channels %}
+     <Chan {{ channel }}>
+     </Chan>
+{% endfor %}
+{% endif %}
+  </Network>
+{% endfor %}
+{% endif %}
+
+    <Pass password>
+        Hash   = {{ user.password.hash }}
+        Method = {{ user.password.method }}
+        Salt   = {{ user.password.salt }}
+    </Pass>
+
+</User>
+
+{% endfor %}

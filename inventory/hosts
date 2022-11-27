@@ -9,12 +9,12 @@ xenadu.int.smoogespace.com ansible_host=192.168.1.150
 xenadu.int.smoogespace.com ansible_host=192.168.1.150
 
 [smoogespace_new]
-linode00.smoogespace.com ansible_port=9022
+linode00.smoogespace.com ansible_port=1022
 
 [smoogespace_old]
 linode01.smoogespace.com
 
 [mailserver_external]
-linode00.smoogespace.com ansible_port=9022
+linode00.smoogespace.com ansible_port=1022
 
 ## end of file

@@ -42,7 +42,7 @@ sshd:
   ListenAddress:
     - 0.0.0.0
     - '::'
-  Port: 9022
+  Port: 1022
   Banner: /etc/issue.banner
 
 # Items for Linux firewall which we need before SSH
@@ -56,13 +56,16 @@ firewall:
   - service: http
     zone: 'public'
     state: enabled
-  - port: '9022/tcp'
-    zone: 'public'
-    state: enabled
   - service: smtp
     zone: 'public'
     state: enabled
   - service: smtps
+    zone: 'public'
+    state: enabled
+  - port: '8642/tcp' # znc port
+    zone: 'public'
+    state: enabled
+  - port: '1022/tcp' # ssh alt port
     zone: 'public'
     state: enabled
 

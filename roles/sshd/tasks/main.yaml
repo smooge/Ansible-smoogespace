@@ -20,6 +20,7 @@
     name: linux-system-roles.firewall
   tags:
       - sshd
+      - firewall
 
 ## Change the sshd configs as needed.    
 - include_role:

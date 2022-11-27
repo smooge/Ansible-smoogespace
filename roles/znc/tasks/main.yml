@@ -1,0 +1,57 @@
+- name: install the znc package
+  package:
+    state: present
+    name: znc
+  tags:
+      - znc
+
+- name: ensure znc config directory is correctly setup
+  file:
+    state: directory
+    path: /var/lib/znc/.znc/configs/
+    mode: 0700
+    owner: znc
+    group: znc
+    seuser: system_u
+  tags:
+      - znc
+
+- name: install znc config file from template
+  template:
+    src: znc.conf.j2
+    dest: /var/lib/znc/.znc/configs/znc2.conf
+#    force: no
+    mode: 0600
+    owner: znc
+    group: znc
+    seuser: system_u
+  tags:
+      - znc
+
+- name: copy/unencrypt znc pem file
+  copy:
+    src: znc.pem
+    dest: /var/lib/znc/.znc/znc.pem
+    force: no
+    mode: 0600
+    owner: znc
+    group: znc
+    seuser: system_u
+  tags:
+      - znc
+      
+# name: add firewall rule for ZNC port
+- include_role:
+    name: linux-system-roles.firewall
+  tags:
+      - firewall
+      - znc
+
+- name: start/enable znc systemd service
+  service:
+    name: znc
+    state: stopped
+    enabled: yes
+  tags:
+      - znc
+

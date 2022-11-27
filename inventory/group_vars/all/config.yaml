@@ -30,4 +30,4 @@ has_procmail: false
 has_httpd: false
 
 change_sshd: false
-alt_sshd: 9022
+alt_sshd: 1022

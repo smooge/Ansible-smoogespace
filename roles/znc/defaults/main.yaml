@@ -1,0 +1,85 @@
+
+znc_version: 1.8.2
+
+# System modules to load
+znc_system_modules:
+- adminlog
+- webadmin
+- log
+
+znc_max_buffer: 5000
+znc_port: 8642
+znc_ipv4: true
+znc_ipv6: true
+znc_ssl: true
+znc_ssl_pem: /var/lib/znc/.znc/znc.pem
+
+znc_users:
+  - name: SSmoogen
+    nick: smooge
+    password:
+      method: sha256
+      hash: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61366639303739313737323237376639326665313763306530653638663330666562666564663366
+          3934373732306137313330376562323735303965326136340a373336353364393939396664303363
+          31373365326265353631356539396561343661326534646664643862393437643234303334336261
+          3137616431623561630a386338656330623832653238616634646334643030396566633231326436
+          35656237353863336466306363343132653262313533663237663530373939383436646239623262
+          33306239386366306439666438653239653238333735306663613965333634653438363263323835
+          38393233373039323035636633353933373736663334643665663361666237656538616430396439
+          38353861666166303162
+      salt: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62626535316335393837663433653536393135343334633139306538613965323863393730643666
+          3766353664386363313036613237376637373635363132630a326365346563663534653437653264
+          39663537383830636335623736373635333131373237636665386436653763396135353466383863
+          6661663931626433300a616538396335636233623862306563303235336264666264376333643165
+          31383434306435376137663566376561393635313331633636333766396564353364
+    allow: "*"
+    admin: true
+    altnick: smooge
+    autoclearchanbuffer: true
+    autoclearquerybuffer: true
+    buffer: 100000
+    chanmodes: "+stn"
+    ident: smooge
+    multiclients: true
+    realname: "Stephen Smoogen"
+    quitmsg: "I have resigned. I will not be pushed, filed, stamped, indexed, briefed, debriefed, or numbered! My life is my own."
+    timestamp: "[%F %H:%M:%S]"
+    timezone: "UTC"
+    atimestamp: false
+    ptimestamp: true
+    modules:
+      - chanserver
+      - controlpanel
+      - webadmin
+      - log
+    networks:
+      libera:
+        server: irc.libera.chat
+        port: 6697
+        ssl: true
+        channels:
+          - "#almalinux"
+          - "#centos-automotive"
+          - "#centos-devel"
+          - "#centos-stream"
+          - "#el-community"
+          - "#epel"
+          - "#fedora-admin"
+          - "#fedora-buildsys"
+          - "#fedora-eln"
+          - "#fedora-meeting-3"
+          - "#fedora-noc"
+          - "#fedora-releng"
+          - "#redhat-cpe"
+          - "#rhel"
+          - "#yocto"
+        modules:
+          - route_replies
+          - keepnick
+          - clientbuffer
+          - log
+    
