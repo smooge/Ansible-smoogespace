@@ -40,7 +40,6 @@ znc_users:
     admin: true
     altnick: smooge
     autoclearchanbuffer: true
-    autoclearquerybuffer: true
     buffer: 100000
     chanmodes: "+stn"
     ident: smooge
@@ -63,20 +62,23 @@ znc_users:
         ssl: true
         channels:
           - "#almalinux"
+          - "#yocto"
           - "#centos-automotive"
           - "#centos-devel"
           - "#centos-stream"
           - "#el-community"
           - "#epel"
-          - "#fedora-admin"
           - "#fedora-buildsys"
+          - "#fedora-devel"
           - "#fedora-eln"
-          - "#fedora-meeting-3"
+          - "#fedora-admin"
           - "#fedora-noc"
           - "#fedora-releng"
-          - "#redhat-cpe"
+          - "#fedora-meeting"
+          - "#fedora-meeting-1"
+          - "#fedora-meeting-2"
+          - "#fedora-meeting-3"
           - "#rhel"
-          - "#yocto"
         modules:
           - route_replies
           - keepnick

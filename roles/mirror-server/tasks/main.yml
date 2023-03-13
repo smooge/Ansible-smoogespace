@@ -54,9 +54,9 @@
     name: httpd
     state: started
 
-- name: == Open port 80 on firewalld
-  firewalld:
-    service: http
-    permanent: true
-    state: enabled
- 
+- include_role:
+    name: linux-system-roles.firewall
+  tags:
+    - httpd
+    - firewall
+

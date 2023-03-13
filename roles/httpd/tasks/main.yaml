@@ -1,0 +1,44 @@
+## This role should set up a minimal httpd environment.
+## It will not set up keys or applications or copy a website.
+
+- name: Install the httpd related packages
+  package:
+    name:
+      - httpd
+      - mod_ssl
+  tags:
+      - httpd
+
+## TODO: we need to set up for some hosts an alternate home directory
+## than /var/www/html . We need to make sure it exists, it has the
+## correct permissions, and that the httpd conf hasa virtual host for
+## it.
+- name: === Set up the html top directory
+  file:
+    state=directory
+    path="{{item}}"
+    owner=root
+    group=root
+    mode=0775
+    setype=httpd_sys_content_t
+    seuser=system_u
+  loop:
+    - {{ httpd_homedirs }}
+  tags:
+    - httpd
+
+- name: == Setup the httpd systemctl (started)
+  service:
+    name: httpd
+    state: started
+
+- name: == Setup the httpd systemctl (enabled)
+  service:
+    name: httpd
+    state: enabled
+
+- include_role:
+    name: linux-system-roles.firewall
+  tags:
+    - httpd
+    - firewall

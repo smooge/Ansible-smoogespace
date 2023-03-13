@@ -19,7 +19,7 @@
 - name: install znc config file from template
   template:
     src: znc.conf.j2
-    dest: /var/lib/znc/.znc/configs/znc2.conf
+    dest: /var/lib/znc/.znc/configs/znc.conf
 #    force: no
     mode: 0600
     owner: znc

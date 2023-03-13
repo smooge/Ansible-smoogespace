@@ -24,3 +24,19 @@ network_connections:
       auto6: yes
     mac: "f8:b1:56:be:ed:32"
 
+firewall:
+  - service: https
+    zone: 'public'
+    state: enabled
+  - service: ssh
+    zone: 'public'
+    state: enabled
+  - service: http
+    zone: 'public'
+    state: enabled
+  - service: smtp
+    zone: 'public'
+    state: enabled
+  - service: smtps
+    zone: 'public'
+    state: enabled

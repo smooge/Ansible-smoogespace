@@ -1,0 +1,114 @@
+---
+# This is partially based off of https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-ansible-on-ubuntu-18-04
+# https://andreas.scherbaum.la/blog/archives/953-Create-and-renew-Lets-Encrypt-certificats-using-Ansible.html
+# https://andreas.scherbaum.la/blog/archives/1017-Create-and-renew-Lets-Encrypt-certificates-using-Ansible-and-the-acme_certificate-module.html
+- hosts: linode00.smoogespace.com
+  vars:
+    - acme_challenge_type: "http-01"
+    - acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+    - acme_version: "2"
+    - acme_email: "smooge@smoogespace.com"
+    - acme_remaining_days: 45
+    - letsencrypt_dir: "/etc/letsencrypt"
+    - letsencrypt_key_dir: "{{letsencrypt_dir}}/keys"
+    - letsencrypt_csrs_dir: "{{letsencrypt_dir}}/csrs"
+    - letsencrypt_certs_dir: "{{letsencrypt_dir}}/certs"
+    - letsencrypt_account_key: "{{letsencrypt_dir}}/account/account.key"
+    - letsencrypt_cert_size: 4096
+    - letsencrypt_cert_type: RSA
+    - cert_name: linode00.smoogespace.com
+    - cert_alt_name: 'DNS:www.stg.smoogespace.com:DNS:smtp.stg.smoogespace.com:DNS:stg.smoogespace.com' 
+    - cert_email: "{{ acme_email }}"
+    - cert_country: "US"
+    - cert_org: "Smoogespace"
+    - cert_digest: "sha256"
+    - html_dir: "/var/www/html"
+
+  tasks:
+    - name: Install required packages
+      package:
+        state: present
+        name: python3-cryptography,httpd,mod_ssl
+
+    - name: Create the letsencrypt directories
+      file:
+        path: "{{letsencrypt_dir}}/{{item}}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0711
+      with_items:
+        - account
+        - certs
+        - csrs
+        - keys
+
+    - name: Create the html letsencrypt directory
+      file:
+        path: "{{html_dir}}/.well-known/acme-challenge"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+      
+    - name: Create a letsencrypt account key
+      community.crypto.openssl_privatekey:
+        path: "{{ letsencrypt_account_key }}"
+        size: "{{ letsencrypt_cert_size }}"
+        type: "{{ letsencrypt_cert_type }}"
+        
+    - name: Create a letsencrypt private key
+      community.crypto.openssl_privatekey:
+        path: "{{ letsencrypt_key_dir }}/{{ cert_name }}"
+        size: "{{ letsencrypt_cert_size }}"
+        type: "{{ letsencrypt_cert_type }}"
+
+    - name: Force create a letsencrypt csr
+      community.crypto.openssl_csr:
+        path: "{{ letsencrypt_csrs_dir }}/{{ cert_name }}.csr"
+        privatekey_path: "{{ letsencrypt_key_dir }}/{{ cert_name }}"
+        common_name: "{{ cert_name }}"
+        email_address: "{{ cert_email }}"
+        country_name: "{{cert_country}}"
+        organization_name: "{{ cert_org }}"
+        digest: "{{ cert_digest }}"
+        subject_alt_name: "{{ cert_alt_name }}"
+        force: true
+
+    - name: Create letsencrypt challenge
+      community.crypto.acme_certificate:
+        account_email: "{{ acme_email }}"
+        account_key_src: "{{ letsencrypt_account_key }}"
+        acme_directory: "{{ acme_directory }}"
+        acme_version: "{{ acme_version }}"
+        chain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.intermediate.pem"
+        challenge: "{{ acme_challenge_type }}"
+        csr: "{{ letsencrypt_csrs_dir }}/{{ cert_name }}.csr"
+        dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.signed.crt"
+        fullchain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.combined.pem"
+        remaining_days: "{{ acme_remaining_days }}"
+        terms_agreed: yes
+      register: create_challenge
+
+    - name: Implement challenge files
+      copy:
+        content: "{{ create_challenge['challenge_data'][item]['http-01']['resource_value'] }}"
+        dest: "{{html_dir}}/{{ create_challenge['challenge_data'][item]['http-01']['resource'] }}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - "{{ cert_name }}"
+
+    - name: Complete letsencrypt challenge
+      community.crypto.acme_certificate:
+        account_email: "{{ acme_email }}"
+        account_key_src: "{{ letsencrypt_account_key }}"
+        acme_directory: "{{ acme_directory }}"
+        acme_version: "{{ acme_version }}"
+        chain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.intermediate.pem"
+        challenge: "{{ acme_challenge_type }}"
+        csr: "{{ letsencrypt_csrs_dir }}/{{ cert_name }}.csr"
+        dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.signed.crt"
+        fullchain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.combined.pem"
+        data: "{{ create_challenge }}"
