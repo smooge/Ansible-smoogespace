@@ -3,9 +3,7 @@
 ## Goals
 
 A general set of playbooks used to configure and update systems in the
-smoogespace domain. We will be using a similar system as Debops
-<https://github.com/debops/debops> but not as full-featured. If it grows
-in usability, a seperate project covering a 'ELOps' would be created.
+smoogespace domain.
 
 ## Layout
 
@@ -49,13 +47,22 @@ times the software is changing enough that 'reuse' is limited already.
   * httpd server
   * mirror server
   * mock builder
-* linode00
-  * httpd server
-  * ttrss server
-  * email server
-* alma-ws2
   * ansible server
   * hugo builder
+* alma8-ws
+  * test system
+* alma9-ws
+  * test system
+* cs9-ws
+  * test system
+* centos7-ws
+  * test system
+* linode00
+  * httpd server
+  * email server
+* linode01
+  * httpd server
+  * email server
 
 ## Targeted Architectures
 

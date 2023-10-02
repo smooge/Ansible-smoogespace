@@ -7,3 +7,4 @@
     - common
     - users
     - rhel-system-roles.network
+    - sshd

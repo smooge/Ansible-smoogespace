@@ -6,7 +6,7 @@ has_ipv6: yes
 
 ## Set up the Network address for the system
 network_connections:
-  - name: eno1
+  - name: eth0
     state: up
     type: ethernet
     autoconnect: yes
@@ -22,7 +22,7 @@ network_connections:
       - int.smoogespace.com
       - smoogespace.com
       auto6: yes
-    mac: "f8:b1:56:be:ed:32"
+    mac: "00:15:5d:01:0d:0a"
 
 firewall:
   - service: https

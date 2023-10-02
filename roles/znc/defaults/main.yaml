@@ -61,24 +61,23 @@ znc_users:
         port: 6697
         ssl: true
         channels:
+          - "#azure"
+          - "#cbl-mariner"
           - "#almalinux"
+          - "#rhel"
           - "#yocto"
           - "#centos-automotive"
           - "#centos-devel"
-          - "#centos-stream"
           - "#el-community"
           - "#epel"
-          - "#fedora-buildsys"
+          - "#fedora-admin"
           - "#fedora-devel"
           - "#fedora-eln"
-          - "#fedora-admin"
-          - "#fedora-noc"
-          - "#fedora-releng"
           - "#fedora-meeting"
           - "#fedora-meeting-1"
           - "#fedora-meeting-2"
           - "#fedora-meeting-3"
-          - "#rhel"
+          - "#fedora-noc"
         modules:
           - route_replies
           - keepnick
