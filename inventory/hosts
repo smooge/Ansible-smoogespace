@@ -1,9 +1,10 @@
 [int_smoogespace]
 xenadu.int.smoogespace.com ansible_host=192.168.1.150
-alma8-ws.int.smoogespace.com ansible_host=192.168.1.140 
-alma9-ws.int.smoogespace.com ansible_host=192.168.1.141
-cs7-ws.int.smoogespace.com ansible_host=192.168.1.142
-cs9-ws.int.smoogespace.com ansible_host=192.168.1.143
+cs7-qemu.int.smoogespace.com ansible_host=192.168.1.140
+alma8-qemu.int.smoogespace.com ansible_host=192.168.1.141
+alma9-qemu.int.smoogespace.com ansible_host=192.168.1.142
+cs9-qemu.int.smoogespace.com ansible_host=192.168.1.143
+autosd-a64.int.smoogespace.com ansible_host=192.168.1.144
 
 [mock_server]
 xenadu.int.smoogespace.com ansible_host=192.168.1.150
@@ -14,8 +15,8 @@ xenadu.int.smoogespace.com ansible_host=192.168.1.150
 [smoogespace_new]
 linode00.smoogespace.com ansible_port=1022
 
-[smoogespace_old]
-linode01.smoogespace.com
+[ext_smoogespace]
+linode01.smoogespace.com ansible_port=1022
 
 [mailserver_external]
 linode00.smoogespace.com ansible_port=1022

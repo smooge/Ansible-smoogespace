@@ -2,6 +2,10 @@
 hostname: "linode01"
 domain: "smoogespace.com"
 
+is_external_smtpd: true
+has_procmail: true
+has_httpd: true
+
 network_connections:
   - name: eth0
     state: up
@@ -19,3 +23,58 @@ network_connections:
       auto6: no
     mac: "f2:3c:91:93:ee:2d"
 
+## Setup the Postfix config for the system using
+## linux-system-roles.postfix
+# Backup multiple times with timestamp
+postfix_conf:
+  myhostname: linode01.smoogespace.com
+
+## Set up sshd using linux-system-roles.sshd
+change_sshd: true
+
+sshd_backup: true
+sshd_config_owner: root
+sshd_config_group: root
+sshd_config_mode: 0600
+sshd:
+  ListenAddress:
+    - 0.0.0.0
+    - '::'
+  Port: 1022
+  Banner: /etc/issue.banner
+
+# Items for Linux firewall which we need before SSH
+firewall:
+  - set_default_zone: 'public'
+    state: enabled
+  - service: https
+    zone: 'public'
+    state: enabled
+  - service: ssh
+    zone: 'public'
+    state: enabled
+  - service: http
+    zone: 'public'
+    state: enabled
+  - service: smtp
+    zone: 'public'
+    state: enabled
+  - service: smtps
+    zone: 'public'
+    state: enabled
+  - port: '8642/tcp' # znc port
+    zone: 'public'
+    state: enabled
+  - port: '1022/tcp' # ssh alt port
+    zone: 'public'
+    state: enabled
+
+# Items for time sync
+timesync_ntp_servers:
+  - hostname: 0.cloudlinux.pool.ntp.org
+    iburst: yes
+  - hostname: 1.cloudlinux.pool.ntp.org
+    iburst: yes
+  - hostname: 2.cloudlinux.pool.ntp.org
+    iburst: yes
+timezone: UTC

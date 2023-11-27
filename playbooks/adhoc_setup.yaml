@@ -1,10 +1,11 @@
 ---
 - name: Setup initial systems
-  hosts: int_smoogespace,smoogespace_new
+  hosts: int_smoogespace,ext_smoogespace
   become: false
   gather_facts: true
   roles:
     - common
     - users
-    - rhel-system-roles.network
+    - linux-system-roles.network
+    - linux-system-roles.timesync
     - sshd

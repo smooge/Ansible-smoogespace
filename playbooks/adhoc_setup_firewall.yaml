@@ -1,0 +1,7 @@
+---
+- name: Setup initial systems firewall
+  hosts: all
+  become: false
+  gather_facts: true
+  roles:
+    - linux-system-roles.firewall

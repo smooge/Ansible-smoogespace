@@ -1,6 +1,6 @@
 ---
 - name: Setup znc on specific servers
-  hosts: smoogespace_new
+  hosts: ext_smoogespace
   become: false
   gather_facts: true
   roles:

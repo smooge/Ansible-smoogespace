@@ -4,4 +4,4 @@
   become: false
   gather_facts: true
   roles:
-    - rhel-system-roles.network
+    - linux-system-roles.network

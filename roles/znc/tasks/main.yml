@@ -50,7 +50,7 @@
 - name: start/enable znc systemd service
   service:
     name: znc
-    state: stopped
+    state: started
     enabled: yes
   tags:
       - znc

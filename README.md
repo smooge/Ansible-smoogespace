@@ -43,23 +43,23 @@ times the software is changing enough that 'reuse' is limited already.
 
 ## Targeted Systems
 
-* xenadu
+* xenadu 
   * httpd server
   * mirror server
   * mock builder
   * ansible server
   * hugo builder
-* alma8-ws
+* alma8-qemu
   * test system
-* alma9-ws
+* alma9-qemu
   * test system
-* cs9-ws
+* cs9-qemu
   * test system
-* centos7-ws
+* cs7-qemu
   * test system
-* linode00
-  * httpd server
-  * email server
+* autosd-qemu
+  * aarch64
+  * test system
 * linode01
   * httpd server
   * email server
@@ -69,12 +69,12 @@ times the software is changing enough that 'reuse' is limited already.
 This project will try to make sure it works on
 
 * x86_64
-* aarch64 ( raspberry pi 4 )
+* aarch64 ( raspberry pi 4 and emulated qemu )
 
 ## Targets Operating Systems
 
 This project will test to make sure it works on
 
-* Fedora NN
+* Fedora 39
 * Alma Linux 8
 * Alma Linux 9

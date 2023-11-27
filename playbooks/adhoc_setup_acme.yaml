@@ -1,8 +1,11 @@
 ---
 # This is partially based off of https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-ansible-on-ubuntu-18-04
+# https://andreas.scherbaum.la/post/2018-05-27_create-and-renew-lets-encrypt-certificates-using-ansible/
 # https://andreas.scherbaum.la/blog/archives/953-Create-and-renew-Lets-Encrypt-certificats-using-Ansible.html
 # https://andreas.scherbaum.la/blog/archives/1017-Create-and-renew-Lets-Encrypt-certificates-using-Ansible-and-the-acme_certificate-module.html
-- hosts: linode00.smoogespace.com
+
+
+- hosts: linode01.smoogespace.com
   vars:
     - acme_challenge_type: "http-01"
     - acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
@@ -16,8 +19,8 @@
     - letsencrypt_account_key: "{{letsencrypt_dir}}/account/account.key"
     - letsencrypt_cert_size: 4096
     - letsencrypt_cert_type: RSA
-    - cert_name: linode00.smoogespace.com
-    - cert_alt_name: 'DNS:www.stg.smoogespace.com:DNS:smtp.stg.smoogespace.com:DNS:stg.smoogespace.com' 
+    - cert_name: linode01.smoogespace.com
+    - cert_alt_name: 'DNS:www.smoogespace.com,DNS:smtp.smoogespace.com,DNS:mail.smoogespace.com' 
     - cert_email: "{{ acme_email }}"
     - cert_country: "US"
     - cert_org: "Smoogespace"
@@ -63,7 +66,7 @@
         size: "{{ letsencrypt_cert_size }}"
         type: "{{ letsencrypt_cert_type }}"
 
-    - name: Force create a letsencrypt csr
+    - name: Create a letsencrypt csr
       community.crypto.openssl_csr:
         path: "{{ letsencrypt_csrs_dir }}/{{ cert_name }}.csr"
         privatekey_path: "{{ letsencrypt_key_dir }}/{{ cert_name }}"
@@ -73,7 +76,7 @@
         organization_name: "{{ cert_org }}"
         digest: "{{ cert_digest }}"
         subject_alt_name: "{{ cert_alt_name }}"
-        force: true
+        # force: true
 
     - name: Create letsencrypt challenge
       community.crypto.acme_certificate:
@@ -98,7 +101,9 @@
         group: root
         mode: 0644
       with_items:
-        - "{{ cert_name }}"
+        - www.smoogespace.com
+        - smtp.smoogespace.com
+        - mail.smoogespace.com
 
     - name: Complete letsencrypt challenge
       community.crypto.acme_certificate:
