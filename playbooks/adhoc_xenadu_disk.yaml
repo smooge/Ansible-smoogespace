@@ -1,0 +1,34 @@
+---
+- name: Setup /dev/sda
+  hosts: xenadu.int.smoogespace.com
+  become: false
+  gather_facts: true
+  vars:
+    storage_safe_mode: false
+    storage_volumes:
+      - name: /mnt/home
+        type: disk
+        disks:
+          - sda
+        fs_type: xfs
+        mount_point: /mnt/home/
+        state: present
+  roles:
+    - linux-system-roles.storage
+
+- name: Setup RAID partition
+  hosts: xenadu.int.smoogespace.com
+  become: false
+  gather_facts: true
+  vars:
+    storage_safe_mode: false
+    storage_volumes:
+      - name: /var/lib/libvirt/
+        type: raid
+        disks: [sdb, sdc ]
+        raid_level: raid1
+        mount_point: /mnt/var/lib/libvirt/
+        state: present
+  roles:
+    - linux-system-roles.storage
+

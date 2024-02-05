@@ -1,0 +1,7 @@
+---
+- name: Setup ansible server
+  hosts: ansible_server
+  become: false
+  gather_facts: true
+  roles:
+    - ansible

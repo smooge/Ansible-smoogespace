@@ -21,4 +21,7 @@ linode01.smoogespace.com ansible_port=1022
 [mailserver_external]
 linode00.smoogespace.com ansible_port=1022
 
+[ansible_server]
+xenadu.int.smoogespace.com
+
 ## end of file

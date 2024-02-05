@@ -1,0 +1,31 @@
+- name: Install the common OS ansible RPM packages
+  package:
+    name: "{{ ansible_rpm_pkgs }}"
+    state: latest
+  when: base_rpm_pkgs
+  tags:
+    - ansible
+
+- name: Install the EL ansible RPM packages
+  package:
+    name: "{{ ansible_el_pkgs }}"
+    state: latest
+  when: ( ansible_distribution == 'RedHat' )  and ansible_el_pkgs
+  tags:
+    - ansible
+
+- name: Install the EL ansible RPM packages
+  package:
+    name: "{{ ansible_el_pkgs }}"
+    state: latest
+  when: ( ansible_distribution == 'AlmaLinux' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' )  and ansible_el_pkgs
+  tags:
+    - ansible
+    
+- name: Install the Fedora ansible RPM packages
+  package:
+    name: "{{ ansible_fc_pkgs }}"
+    state: latest
+  when: ansible_distribution == 'Fedora' and ansible_distribution_major_version >= "28" and ansible_fc_pkgs
+  tags:
+    - ansible

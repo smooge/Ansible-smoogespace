@@ -1,0 +1,18 @@
+---
+ansible_rpm_pkgs:
+  - ansible
+  - ansible-collection-ansible-netcommon
+  - ansible-collection-ansible-posix
+  - ansible-collection-ansible-utils
+  - ansible-collection-community-general
+  - ansible-collection-community-libvirt
+  - ansible-collection-containers-podman
+  - ansible-core
+  - emacs-ansible
+  - emacs-ansible-vault-mode
+
+ansible_el_pkgs:
+  - redhat-system-roles
+
+ansible_fc_pkgs:
+  - linux-system-roles
