@@ -19,6 +19,7 @@
     - letsencrypt_account_key: "{{letsencrypt_dir}}/account/account.key"
     - letsencrypt_cert_size: 4096
     - letsencrypt_cert_type: RSA
+    - domain_name: smoogespace.com
     - cert_name: linode01.smoogespace.com
     - cert_alt_name: 'DNS:www.smoogespace.com,DNS:smtp.smoogespace.com,DNS:mail.smoogespace.com' 
     - cert_email: "{{ acme_email }}"
@@ -32,6 +33,7 @@
       package:
         state: present
         name: python3-cryptography,httpd,mod_ssl
+
 
     - name: Create the letsencrypt directories
       file:
@@ -78,7 +80,7 @@
         subject_alt_name: "{{ cert_alt_name }}"
         # force: true
 
-    - name: Create letsencrypt challenge
+    - name: Create letsencrypt for {{ cert_name }} challenge
       community.crypto.acme_certificate:
         account_email: "{{ acme_email }}"
         account_key_src: "{{ letsencrypt_account_key }}"
@@ -91,19 +93,21 @@
         fullchain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.combined.pem"
         remaining_days: "{{ acme_remaining_days }}"
         terms_agreed: yes
-      register: create_challenge
+      register: acme_challenge
 
-    - name: Implement challenge files
+
+    - name: "Implement http-01 challenge files"
       copy:
-        content: "{{ create_challenge['challenge_data'][item]['http-01']['resource_value'] }}"
-        dest: "{{html_dir}}/{{ create_challenge['challenge_data'][item]['http-01']['resource'] }}"
+        content: "{{ acme_challenge['challenge_data'][item]['http-01']['resource_value'] }}"
+        dest: "{{html_dir}}/{{ acme_challenge['challenge_data'][item]['http-01']['resource'] }}"
         owner: root
         group: root
         mode: 0644
       with_items:
-        - www.smoogespace.com
-        - smtp.smoogespace.com
-        - mail.smoogespace.com
+        - "www.{{ domain_name }}"
+        - "smtp.{{ domain_name }}"
+        - "mail.{{ domain_name }}"
+      when: acme_challenge is changed
 
     - name: Complete letsencrypt challenge
       community.crypto.acme_certificate:
@@ -116,4 +120,18 @@
         csr: "{{ letsencrypt_csrs_dir }}/{{ cert_name }}.csr"
         dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.signed.crt"
         fullchain_dest: "{{ letsencrypt_certs_dir }}/{{ cert_name }}.combined.pem"
-        data: "{{ create_challenge }}"
+        data: "{{ acme_challenge }}"
+      when: acme_challenge is changed
+
+    - name: Restart httpd server if needed
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+      when: acme_challenge is changed
+
+    - name: Restart smtpd server if needed
+      ansible.builtin.service:
+        name: postfix
+        state: restarted
+      when: acme_challenge is changed
+

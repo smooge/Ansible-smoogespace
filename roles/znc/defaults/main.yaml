@@ -62,22 +62,16 @@ znc_users:
         ssl: true
         channels:
           - "#almalinux"
-          - "#cbl-mariner"
           - "#centos-automotive"
           - "#centos-devel"
           - "#centos-stream"
           - "#el-community"
           - "#epel"
-          - "#fedora-admin"
           - "#fedora-devel"
-          - "#fedora-eln"
-          - "#fedora-meeting"
-          - "#fedora-meeting-1"
-          - "#fedora-meeting-2"
-          - "#fedora-meeting-3"
-          - "#fedora-noc"
           - "#rhel"
           - "#yocto"
+          - "#idlerpg"
+          - "#idlerpg-discuss"
         modules:
           - keepnick
           - log
