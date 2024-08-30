@@ -1,0 +1,5 @@
+
+## Home directory we want to put the packages in and httpd will serve from.
+server_homedir: /srv/mirrors
+
+mirror_pkgs: dnf-utils, python3-policycoreutils, httpd, createrepo_c

@@ -1,6 +1,4 @@
 # A rolebook to cover installation of a 'local' mirror.
-# This probably needs to be a vault file. I am putting it in the
-# .gitignore so you have to supply your own.
 
 # Ensure server has correct packages needed
 - name: Install the OS base packages
@@ -8,43 +6,15 @@
     name: "{{ mirror_pkgs }}"
     state: latest
 
-# Set up the mirror directory tree
-- name: == Set up all directory trees
+# Set up the mirror directory tree.
+- name: == Set up all vault directory trees
   block:
     - name: === Set up the mirror top directory
       file: state=directory path={{ server_homedir }} owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
     - name: === Set up the CentOS directory
-      file: state=directory path={{ server_homedir }}/centos/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
+      file: state=directory path={{ server_homedir }}/centos-vault/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
     - name: === Set up the EPEL directory
-      file: state=directory path={{ server_homedir }}/epel/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
-    - name: === Set up the Fedora directory
-      file: state=directory path={{ server_homedir }}/fedora/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
-    - name: === Set up the Alma directory
-      file: state=directory path={{ server_homedir }}/almalinux/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
-
-- name: == Setup the mirror scripts
-  template: src=scripts/{{ item }}.j2 dest=/usr/local/bin/{{ item }} owner=root group=root mode=0744
-  with_items:
-    - mirror-centos.sh
-    - mirror-epel.sh
-    - mirror-fedora.sh
-    - mirror-alma.sh
-
-- name: == Setup the cron jobs
-  block:
-    - name: === Mirror EPEL
-      cron: name="mirror-epel" minute="0" hour="2"
-            job="/usr/local/bin/mirror-epel.sh"
-            cron_file="mirror-epel"
-            user="root"
-    - name: === Mirror Alma
-      cron: name="mirror-alma" minute="0" hour="3"
-            job="/usr/local/bin/mirror-alma.sh"
-            cron_file="mirror-alma"
-            user="root"
-      tags:
-        - cron
-        - mirror
+      file: state=directory path={{ server_homedir }}/epel-vault/ owner=root group=root mode=0775 setype=httpd_sys_content_t seuser=system_u
 
 - name: == Setup the httpd server configs
   template: src=mirror-httpd.conf.j2 dest=/etc/httpd/conf.d/mirror-httpd.conf mode=0644

@@ -23,11 +23,11 @@
   vars:
     storage_safe_mode: false
     storage_volumes:
-      - name: /var/lib/libvirt/
+      - name: /srv/
         type: raid
         disks: [sdb, sdc ]
         raid_level: raid1
-        mount_point: /mnt/var/lib/libvirt/
+        mount_point: /srv/
         state: present
   roles:
     - linux-system-roles.storage
