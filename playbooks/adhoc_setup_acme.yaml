@@ -95,18 +95,15 @@
         terms_agreed: yes
       register: acme_challenge
 
-
-    - name: "Implement http-01 challenge files"
-      copy:
-        content: "{{ acme_challenge['challenge_data'][item]['http-01']['resource_value'] }}"
-        dest: "{{html_dir}}/{{ acme_challenge['challenge_data'][item]['http-01']['resource'] }}"
+    - name: Copy http-01 challenge data
+      ansible.builtin.copy:
+        content: "{{ item.value['http-01']['resource_value'] }}"
+        dest: "{{html_dir}}/{{ item.value['http-01']['resource'] }}"
         owner: root
         group: root
         mode: 0644
-      with_items:
-        - "www.{{ domain_name }}"
-        - "smtp.{{ domain_name }}"
-        - "mail.{{ domain_name }}"
+      with_dict:
+        - "{{ acme_challenge['challenge_data'] }}"
       when: acme_challenge is changed
 
     - name: Complete letsencrypt challenge
