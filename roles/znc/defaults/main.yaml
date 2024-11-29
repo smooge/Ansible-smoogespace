@@ -62,19 +62,19 @@ znc_users:
         ssl: true
         channels:
           - "#almalinux"
-          - "#centos-automotive"
+          - "#centos"
           - "#centos-devel"
-          - "#centos-stream"
           - "#el-community"
           - "#epel"
           - "#fedora-devel"
-          - "#rhel"
-          - "#yocto"
+          - "#fedora-noc"
           - "#idlerpg"
           - "#idlerpg-discuss"
+          - "#overseers"
+          - "#rhel"
+          - "#yocto"
         modules:
           - keepnick
           - log
           - route_replies
           - sasl
-    
