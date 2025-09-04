@@ -7,26 +7,26 @@
 
 - hosts: linode01.smoogespace.com
   vars:
-    - acme_challenge_type: "http-01"
-    - acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
-    - acme_version: "2"
-    - acme_email: "smooge@smoogespace.com"
-    - acme_remaining_days: 45
-    - letsencrypt_dir: "/etc/letsencrypt"
-    - letsencrypt_key_dir: "{{letsencrypt_dir}}/keys"
-    - letsencrypt_csrs_dir: "{{letsencrypt_dir}}/csrs"
-    - letsencrypt_certs_dir: "{{letsencrypt_dir}}/certs"
-    - letsencrypt_account_key: "{{letsencrypt_dir}}/account/account.key"
-    - letsencrypt_cert_size: 4096
-    - letsencrypt_cert_type: RSA
-    - domain_name: smoogespace.com
-    - cert_name: linode01.smoogespace.com
-    - cert_alt_name: 'DNS:www.smoogespace.com,DNS:smtp.smoogespace.com,DNS:mail.smoogespace.com' 
-    - cert_email: "{{ acme_email }}"
-    - cert_country: "US"
-    - cert_org: "Smoogespace"
-    - cert_digest: "sha256"
-    - html_dir: "/var/www/html"
+    acme_challenge_type: "http-01"
+    acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+    acme_version: "2"
+    acme_email: "smooge@smoogespace.com"
+    acme_remaining_days: 45
+    letsencrypt_dir: "/etc/letsencrypt"
+    letsencrypt_key_dir: "{{letsencrypt_dir}}/keys"
+    letsencrypt_csrs_dir: "{{letsencrypt_dir}}/csrs"
+    letsencrypt_certs_dir: "{{letsencrypt_dir}}/certs"
+    letsencrypt_account_key: "{{letsencrypt_dir}}/account/account.key"
+    letsencrypt_cert_size: 4096
+    letsencrypt_cert_type: RSA
+    domain_name: smoogespace.com
+    cert_name: linode01.smoogespace.com
+    cert_alt_name: 'DNS:www.smoogespace.com'
+    cert_email: "{{ acme_email }}"
+    cert_country: "US"
+    cert_org: "Smoogespace"
+    cert_digest: "sha256"
+    html_dir: "/var/www/html"
 
   tasks:
     - name: Install required packages
@@ -55,13 +55,13 @@
         owner: root
         group: root
         mode: 0755
-      
+
     - name: Create a letsencrypt account key
       community.crypto.openssl_privatekey:
         path: "{{ letsencrypt_account_key }}"
         size: "{{ letsencrypt_cert_size }}"
         type: "{{ letsencrypt_cert_type }}"
-        
+
     - name: Create a letsencrypt private key
       community.crypto.openssl_privatekey:
         path: "{{ letsencrypt_key_dir }}/{{ cert_name }}"
@@ -125,10 +125,3 @@
         name: httpd
         state: restarted
       when: acme_challenge is changed
-
-    - name: Restart smtpd server if needed
-      ansible.builtin.service:
-        name: postfix
-        state: restarted
-      when: acme_challenge is changed
-
